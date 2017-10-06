@@ -3,6 +3,9 @@
 ## Install
 `> go get github.com/buffersandbeer/canlib`
 
+## Docs
+Documentation and usage explanations can be found at <https://godoc.org/github.com/buffersandbeer/canlib>.
+
 ## Tests
 `> go test` is used for unit testing. No special dependencies are required for testing.
 
