@@ -1,4 +1,4 @@
-# CANLIB - A series of GO utilities for Controller Area Network (CAN) Busses
+# CANLIB - A series of GO utilities for CAN bus testing
 
 ## Install
 `> go get github.com/buffersandbeer/canlib`
