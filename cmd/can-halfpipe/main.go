@@ -1,7 +1,7 @@
 package main
 
 import (
-    "canlib"
+    "github.com/buffersandbeer/canlib"
     "flag"
     "fmt"
     "sync"
