@@ -14,6 +14,6 @@ func TestCreateRawFrame(t *testing.T) {
         t.Error("CreateRawFrame returned an error: " + err.Error())
     }
     if !CompareRawFrames(expected, *result) {
-        t.Error(fmt.Sprintf("%x != %x", result, expected))
+        t.Errorf(fmt.Sprintf("%x != %x", result, expected))
     }
 }

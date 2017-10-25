@@ -5,7 +5,7 @@ import (
     "bytes"
 )
 
-//TestByteArrayToCanFrame checks that ByteArrayToCanFrame accurately converts an Extended CAN frame into a RawCanFrame
+// TestByteArrayToCanFrame checks that ByteArrayToCanFrame accurately converts an Extended CAN frame into a RawCanFrame
 func TestByteArrayToCanFrame(t *testing.T) {
     frame := []byte{109, 237, 19, 137, 8, 0, 0, 0, 15, 234, 197, 79, 101, 147, 251, 118}
     expected := RawCanFrame{
@@ -33,5 +33,27 @@ func TestByteArrayToCanFrame(t *testing.T) {
         t.Error("data length mismatch")
     } else if bytes.Equal(result.Data, expected.Data) != true {
         t.Error("data value mismatch")
+    }
+}
+
+// TestProcessRawCan will verify that can messages can be processed
+func TestProcessRawCan(t *testing.T) {
+    testFrame := RawCanFrame {
+        OID: 1,
+        ID: 1,
+        Rtr: false,
+        Eff: false,
+        Err: false,
+        Dlc: 1,
+        Data: []byte{1},
+    }
+    result := ProcessedCanFrame{}
+    ProcessRawCan(&result, testFrame, "test")
+    expected := "249ba6277758050695e8f5909bacd6d3"
+    if result.PacketHash != expected {
+        t.Errorf("%s != %s", result.PacketHash, expected)
+    }
+    if result.CaptureInterface != "test" {
+        t.Errorf("%s != test", result.CaptureInterface)
     }
 }

@@ -3,6 +3,8 @@ package canlib
 import (
     "golang.org/x/sys/unix"
     "encoding/binary"
+    "fmt"
+    "crypto/md5"
 )
 
 // ByteArrayToCanFrame converts a byte array containing a CAN packet and converts it into a RawCanFrame
@@ -32,4 +34,12 @@ func ByteArrayToCanFrame(array []byte, canMessage *RawCanFrame, captureTime int6
     canMessage.Dlc = array[4]
     canMessage.Data = array[8:8+canMessage.Dlc]
     canMessage.Timestamp = captureTime
+}
+
+// ProcessRawCan will process a raw can message to add additional contextual information
+func ProcessRawCan(processed *ProcessedCanFrame, frame RawCanFrame, capInterface string) {
+    processed.Packet = frame
+    toHash := append(frame.Data, byte(frame.ID))
+    processed.PacketHash = fmt.Sprintf("%x", md5.Sum(toHash))
+    processed.CaptureInterface = capInterface
 }

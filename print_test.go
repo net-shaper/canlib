@@ -20,6 +20,6 @@ func TestRawCanFrameToString(t *testing.T) {
     expected := "1,1,NOEFF,NORTR,NOERR,1,1,01"
     result := RawCanFrameToString(testFrame, ",")
     if expected != result {
-        t.Error(fmt.Sprintf("%s != %s", expected, result))
+        t.Errorf(fmt.Sprintf("%s != %s", expected, result))
     }
 }
