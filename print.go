@@ -48,7 +48,7 @@ func TimestampToSeconds(timestamp int64) float64 {
 func ProcessedCanFrameToString(frame ProcessedCanFrame, delimiter string) string {
     var frameString string
     frameString += frame.CaptureInterface + delimiter
-    frameString += RawCanFrameToString(frame.Packet, delimiter) + delimiter
-    frameString += frame.PacketHash
+    frameString += frame.PacketHash + delimiter
+    frameString += RawCanFrameToString(frame.Packet, delimiter)
     return frameString
 }

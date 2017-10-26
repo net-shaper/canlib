@@ -48,7 +48,7 @@ func TestProcessedCanFrameToString(t *testing.T) {
     testProcessedFrame := ProcessedCanFrame{Packet: testRawFrame,
                                             CaptureInterface: "test",
                                             PacketHash: "testHash"}
-    expected := "test,1,1,NOEFF,NORTR,NOERR,1,1,01,testHash"
+    expected := "test,testHash,1,1,NOEFF,NORTR,NOERR,1,1,01"
     result := ProcessedCanFrameToString(testProcessedFrame, ",")
     if expected != result {
         t.Errorf("%s != %s", expected, result)
