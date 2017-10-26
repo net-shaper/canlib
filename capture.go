@@ -19,7 +19,7 @@ func CaptureCan(canInterface string, canChannel chan<- RawCanFrame, errorChannel
     for {
         unix.Read(canFD, frame)
         captime := time.Now().UnixNano()
-        ByteArrayToCanFrame(frame, canmsg, captime)
+        ByteArrayToCanFrame(frame, canmsg, captime, canInterface)
         canChannel <- *canmsg
     }
 

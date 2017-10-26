@@ -8,9 +8,10 @@ import (
 )
 
 // ByteArrayToCanFrame converts a byte array containing a CAN packet and converts it into a RawCanFrame
-func ByteArrayToCanFrame(array []byte, canMessage *RawCanFrame, captureTime int64) {
+func ByteArrayToCanFrame(array []byte, canMessage *RawCanFrame, captureTime int64, capIface string) {
     canMessage.OID = binary.LittleEndian.Uint32(array[0:4])
     canMessage.ID = canMessage.OID
+    canMessage.CaptureInterface = capIface
 
     // Check for the RTR Flag
     if canMessage.ID & unix.CAN_RTR_FLAG != 0 {
@@ -37,9 +38,8 @@ func ByteArrayToCanFrame(array []byte, canMessage *RawCanFrame, captureTime int6
 }
 
 // ProcessRawCan will process a raw can message to add additional contextual information
-func ProcessRawCan(processed *ProcessedCanFrame, frame RawCanFrame, capInterface string) {
+func ProcessRawCan(processed *ProcessedCanFrame, frame RawCanFrame) {
     processed.Packet = frame
     toHash := append(frame.Data, byte(frame.ID))
     processed.PacketHash = fmt.Sprintf("%x", md5.Sum(toHash))
-    processed.CaptureInterface = capInterface
 }

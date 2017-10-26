@@ -15,8 +15,9 @@ func TestRawCanFrameToString(t *testing.T) {
                             Err: false,
                             Data: []byte{1},
                             Timestamp: 1000000000,
+                            CaptureInterface: "test",
     }
-    expected := "1,1,NOEFF,NORTR,NOERR,1,1,01"
+    expected := "test,1,1,NOEFF,NORTR,NOERR,1,1,01"
     result := RawCanFrameToString(testFrame, ",")
     if expected != result {
         t.Errorf("%s != %s", expected, result)
@@ -44,11 +45,11 @@ func TestProcessedCanFrameToString(t *testing.T) {
                             Err: false,
                             Data: []byte{1},
                             Timestamp: 1000000000,
+                        CaptureInterface: "test",
     }
     testProcessedFrame := ProcessedCanFrame{Packet: testRawFrame,
-                                            CaptureInterface: "test",
                                             PacketHash: "testHash"}
-    expected := "test,testHash,1,1,NOEFF,NORTR,NOERR,1,1,01"
+    expected := "testHash,test,1,1,NOEFF,NORTR,NOERR,1,1,01"
     result := ProcessedCanFrameToString(testProcessedFrame, ",")
     if expected != result {
         t.Errorf("%s != %s", expected, result)

@@ -39,7 +39,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "\nExamples:\n")
         fmt.Fprintf(os.Stderr, "\t%s -interface slcan0 -ids-file ./ids.txt\t# Fuzz slcan0 with ids from ids.txt\n", appName)
     }
-    
+
     // Parse command line arguments
     flag.Parse()
 

@@ -12,6 +12,7 @@ import (
 func RawCanFrameToString(frame RawCanFrame, delimiter string) string {
     var frameString string
     timestamp := TimestampToSeconds(frame.Timestamp)
+    frameString += frame.CaptureInterface + delimiter
     frameString += strconv.FormatFloat(timestamp, 'f', -1, 64) + delimiter
     frameString += fmt.Sprintf("%X", frame.OID) + delimiter
     if frame.Eff {
@@ -47,7 +48,6 @@ func TimestampToSeconds(timestamp int64) float64 {
 // including stdout, csv, and other custom delimited formats.
 func ProcessedCanFrameToString(frame ProcessedCanFrame, delimiter string) string {
     var frameString string
-    frameString += frame.CaptureInterface + delimiter
     frameString += frame.PacketHash + delimiter
     frameString += RawCanFrameToString(frame.Packet, delimiter)
     return frameString

@@ -16,9 +16,10 @@ func TestByteArrayToCanFrame(t *testing.T) {
         Eff: true,
         Dlc: 8,
         Data: []byte{15, 234, 197, 79, 101, 147, 251, 118},
+        CaptureInterface: "test",
 	}
     var result = new(RawCanFrame)
-	ByteArrayToCanFrame(frame, result, 0)
+	ByteArrayToCanFrame(frame, result, 0, "test")
 	if (result.OID != expected.OID) {
 		t.Error("OID mismatch")
 	} else if result.ID != expected.ID {
@@ -33,6 +34,8 @@ func TestByteArrayToCanFrame(t *testing.T) {
         t.Error("data length mismatch")
     } else if bytes.Equal(result.Data, expected.Data) != true {
         t.Error("data value mismatch")
+    } else if result.CaptureInterface != expected.CaptureInterface {
+        t.Errorf("capture interface mismatch")
     }
 }
 
@@ -48,12 +51,9 @@ func TestProcessRawCan(t *testing.T) {
         Data: []byte{1},
     }
     result := ProcessedCanFrame{}
-    ProcessRawCan(&result, testFrame, "test")
+    ProcessRawCan(&result, testFrame)
     expected := "249ba6277758050695e8f5909bacd6d3"
     if result.PacketHash != expected {
         t.Errorf("%s != %s", result.PacketHash, expected)
-    }
-    if result.CaptureInterface != "test" {
-        t.Errorf("%s != test", result.CaptureInterface)
     }
 }

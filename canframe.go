@@ -10,11 +10,12 @@ type RawCanFrame struct {
     Err bool // Error flag
     Data []byte // Message Payload
     Timestamp int64 // Time message was captured as Unix Timestamp in nanoseconds
+    CaptureInterface string // Name of capturing interface
 }
 
 // ProcessedCanFrame represents a CAN packet and additional data about the packet
 type ProcessedCanFrame struct {
     Packet RawCanFrame // CAN packet
     PacketHash string // md5 hash of the Packet's ID and Data fields
-    CaptureInterface string // Name of capturing interface
+    AlphaNumData string // Any Alpha-numeric data within the can payload
 }
