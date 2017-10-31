@@ -39,6 +39,17 @@ func TestByteArrayToCanFrame(t *testing.T) {
     }
 }
 
+// BenchmarkByteArrayToCanFrame runs benchmarks on ByteArrayToCanFrame
+func BenchmarkByteArrayToCanFrame(b *testing.B) {
+    frame := []byte{109, 237, 19, 137, 8, 0, 0, 0, 15, 234, 197, 79, 101, 147, 251, 118}
+    var result = new(RawCanFrame)
+    b.ResetTimer()
+	ByteArrayToCanFrame(frame, result, 0, "test")
+    for i := 0; i < b.N; i ++{
+        ByteArrayToCanFrame(frame, result, 0, "test")
+    }
+}
+
 // TestProcessRawCan will verify that can messages can be processed
 func TestProcessRawCan(t *testing.T) {
     testFrame := RawCanFrame {
@@ -55,5 +66,50 @@ func TestProcessRawCan(t *testing.T) {
     expected := "249ba6277758050695e8f5909bacd6d3"
     if result.PacketHash != expected {
         t.Errorf("%s != %s", result.PacketHash, expected)
+    }
+}
+// BenchmarkProcessRawCan runs benchmarks on ProcessRawCan
+func BenchmarkProcessRawCan(b *testing.B) {
+    testFrame := RawCanFrame {
+        OID: 1,
+        ID: 1,
+        Rtr: false,
+        Eff: false,
+        Err: false,
+        Dlc: 1,
+        Data: []byte{1},
+    }
+    result := ProcessedCanFrame{}
+    for i := 0; i < b.N; i ++{
+        ProcessRawCan(&result, testFrame)
+    }
+}
+
+// TestProcessCandump will verify that candump messages are appropriately converted to rawcanframe
+func TestProcessCandump(t *testing.T) {
+    expected := RawCanFrame {
+        OID: 0,
+        ID: 1,
+        Rtr: false,
+        Eff: false,
+        Err: false,
+        Dlc: 1,
+        Data: []byte{1},
+        Timestamp: 1000000000,
+        CaptureInterface: "test",
+    }
+    result := RawCanFrame{}
+    ProcessCandump(&result, "(1) test 1#1")
+    if result.OID != expected.OID || expected.ID != result.ID {
+        t.Errorf("%s != %s", expected, result)
+    }
+}
+
+// BenchmarkProcessCandump runs benchmarks on ProcessCandump
+func BenchmarkProcessCandump(b *testing.B) {
+    result := RawCanFrame{}
+    b.ResetTimer()
+    for i := 0; i < b.N; i ++{
+        ProcessCandump(&result, "(1) test 1#1")
     }
 }
