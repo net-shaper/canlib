@@ -63,7 +63,7 @@ func TestProcessRawCan(t *testing.T) {
 	}
 	result := ProcessedCanFrame{}
 	ProcessRawCan(&result, testFrame)
-	expected := "249ba6277758050695e8f5909bacd6d3"
+	expected := "1#01"
 	if result.PacketHash != expected {
 		t.Errorf("%s != %s", result.PacketHash, expected)
 	}

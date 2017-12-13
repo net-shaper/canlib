@@ -1,7 +1,6 @@
 package canlib
 
 import (
-	"crypto/md5"
 	"encoding/binary"
 	"encoding/hex"
 	"errors"
@@ -44,8 +43,8 @@ func ByteArrayToCanFrame(array []byte, canMessage *RawCanFrame, captureTime int6
 // ProcessRawCan will process a raw can message to add additional contextual information
 func ProcessRawCan(processed *ProcessedCanFrame, frame RawCanFrame) {
 	processed.Packet = frame
-	toHash := append(frame.Data, byte(frame.ID))
-	processed.PacketHash = fmt.Sprintf("%x", md5.Sum(toHash))
+    hash := (fmt.Sprintf("%X",frame.ID)+"#"+fmt.Sprintf("%X",frame.Data))
+    processed.PacketHash = hash
 }
 
 // ProcessCandump will take a Socketcan/candump log and parse it into a raw_can_frame
