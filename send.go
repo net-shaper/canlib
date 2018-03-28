@@ -3,12 +3,13 @@ package canlib
 import (
 	"encoding/binary"
 	"errors"
+
 	"golang.org/x/sys/unix"
 )
 
 // SendCan will send the provided CAN message on the given CAN interface
 func SendCan(canInterface string, message RawCanFrame) error {
-	if (message.Dlc > 8) || (len(message.Data) != int(message.Dlc)) || (message.OID > 4) {
+	if (message.Dlc > 8) || (len(message.Data) != int(message.Dlc)) {
 		return errors.New("CAN message to send is invalid")
 	}
 
