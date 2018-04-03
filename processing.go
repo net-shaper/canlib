@@ -43,8 +43,8 @@ func ByteArrayToCanFrame(array []byte, canMessage *RawCanFrame, captureTime int6
 // ProcessRawCan will process a raw can message to add additional contextual information
 func ProcessRawCan(processed *ProcessedCanFrame, frame RawCanFrame) {
 	processed.Packet = frame
-    hash := (fmt.Sprintf("%X",frame.ID)+"#"+fmt.Sprintf("%X",frame.Data))
-    processed.PacketHash = hash
+	hash := (fmt.Sprintf("%X", frame.ID) + "#" + fmt.Sprintf("%X", frame.Data))
+	processed.PacketHash = hash
 }
 
 // ProcessCandump will take a Socketcan/candump log and parse it into a raw_can_frame
