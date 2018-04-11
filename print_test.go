@@ -30,7 +30,7 @@ func TestTimestampToSeconds(t *testing.T) {
 	expected := float64(1)
 	result := TimestampToSeconds(fakeTime)
 	if expected != result {
-		t.Errorf("%s != %s", expected, result)
+		t.Errorf("%v != %v", expected, result)
 	}
 }
 

@@ -27,8 +27,9 @@ func TestRawFrameInSliceFail(t *testing.T) {
 
 // TestCompareRawFrames checks that CompareRawFrames returns true if two RawCanFrames are the same
 func TestCompareRawFrames(t *testing.T) {
-	testFrame := RawCanFrame{OID: 1, Dlc: 1, Data: []byte{1}}
-	result := CompareRawFrames(testFrame, testFrame)
+	testFrame := RawCanFrame{OID: 1, Dlc: 1, Data: []byte{1}, Timestamp: 1}
+	testFrame2 := RawCanFrame{OID: 1, Dlc: 1, Data: []byte{1}, Timestamp: 2}
+	result := CompareRawFrames(testFrame, testFrame2)
 	if result != true {
 		t.Error("CompareRawFrames returned false when checking identical frames")
 	}
