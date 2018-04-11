@@ -102,7 +102,7 @@ func TestProcessCandump(t *testing.T) {
 	result := RawCanFrame{}
 	ProcessCandump(&result, "(1) test 1#1")
 	if result.OID != expected.OID || expected.ID != result.ID {
-		t.Errorf("%s != %s", expected, result)
+		t.Errorf("%v != %v", expected, result)
 	}
 }
 
@@ -132,7 +132,7 @@ func TestProcessCanalyze(t *testing.T) {
 	result := RawCanFrame{}
 	ProcessCanalyzeLog(&result, example)
 	if result.OID != expected.OID || result.ID != expected.ID || result.Dlc != expected.Dlc {
-		t.Errorf("%s != %s", expected, result)
+		t.Errorf("%v != %v", expected, result)
 	}
 	if bytes.Compare(expected.Data, result.Data) != 0 {
 		t.Errorf("%s != %s", expected.Data, result.Data)
