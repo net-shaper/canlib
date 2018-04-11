@@ -5,7 +5,6 @@ import (
 	"errors"
 
 	"golang.org/x/sys/unix"
-	"reflect"
 )
 
 // SendCan will send the provided CAN message on the given CAN interface
